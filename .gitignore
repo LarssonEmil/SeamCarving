@@ -2,3 +2,11 @@ RayCastLab.sln
 *.suo
 RayCastLab.vcxproj
 *.filters
+*.opensdf
+RayCastLab.sdf
+*.obj
+Release/RayCastLab.exe
+*.log
+Release/RayCastLab.pdb
+*.tlog
+Release/vc120.pdb
