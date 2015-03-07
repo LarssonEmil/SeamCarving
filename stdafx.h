@@ -15,6 +15,3 @@
 #define SAFE_RELEASE(x) if( x ) { (x)->Release(); (x) = nullptr; }
 #define SAFE_DELETE(x) if( x ) { delete(x); (x) = nullptr; }
 #define PI (3.14159265358979323846f)
-
-const unsigned int SCREEN_WIDTH	= 800;
-const unsigned int SCREEN_HEIGHT	= 600;
