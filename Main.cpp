@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------------
 #include "stdafx.h"
 #include "ToScreen.h"
-#include "SeamCarving\LinkSquare.h"
+#include "LinkSquare.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ unsigned int SCREEN_HEIGHT;
 //--------------------------------------------------------------------------------------
 HRESULT Init()
 {
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	g_ToScreen = new ToScreen();
 	g_ToScreen->Init(g_hWnd);
 
@@ -72,6 +72,13 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 	__int64 prevTimeStamp = 0;
 	QueryPerformanceCounter((LARGE_INTEGER*)&prevTimeStamp);
 
+	bool Remove = false;
+	bool Gradient = false;
+	bool Red = false;
+
+	bool lastGradient = true;
+	bool lastRed = false;
+
 	// Main message loop
 	MSG msg = {0};
 	while(WM_QUIT != msg.message)
@@ -80,6 +87,35 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
+			
+			switch (msg.message)
+			{
+			case WM_KEYDOWN:
+				WPARAM param = msg.wParam;
+				char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+				if (c == 'Q')
+				{
+					if (Remove)
+						Remove = false;
+					else
+						Remove = true;
+				}
+				else if (c == 'W')
+				{
+					if (Gradient)
+						Gradient = false;
+					else
+						Gradient = true;
+				}
+				else if (c == 'E')
+				{
+					if (Red)
+						Red = false;
+					else
+						Red = true;
+				}
+
+			}
 		}
 		else
 		{
@@ -88,9 +124,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			float dt = (currTimeStamp - prevTimeStamp) * secsPerCnt;
 
 			//need to updatecheck
-
+		
 			//render
-			Update(&LSQ ,dt, false, false, false);
+			if(Remove || Gradient != lastGradient || Red != lastRed)
+				Update(&LSQ ,dt, Remove, Gradient, Red);
+			lastGradient = Gradient;
+			lastRed = Red;
+			//Remove = false;
+			//Sleep(0);
 			Render();
 
 			prevTimeStamp = currTimeStamp;

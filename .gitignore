@@ -10,3 +10,5 @@ Release/RayCastLab.exe
 Release/RayCastLab.pdb
 *.tlog
 Release/vc120.pdb
+Debug/SeamCarving.pdb
+*.pdb
