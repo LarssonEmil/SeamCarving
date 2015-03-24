@@ -126,8 +126,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			//need to updatecheck
 		
 			//render
-			if(Remove || Gradient != lastGradient || Red != lastRed)
-				Update(&LSQ ,dt, Remove, Gradient, Red);
+			if (Remove || Gradient != lastGradient || Red != lastRed)
+			{
+				Update(&LSQ, dt, Remove, Gradient, Red);
+			}
+			else
+				Sleep(250);
 			lastGradient = Gradient;
 			lastRed = Red;
 			//Remove = false;

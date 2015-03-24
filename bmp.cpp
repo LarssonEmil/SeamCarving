@@ -13,7 +13,7 @@ void bmp::fill()
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-	std::string imagepath = "image4.bmp";
+	std::string imagepath = "image.bmp";
 	FILE* file = fopen(imagepath.c_str(), "rb");
 	if (!file)
 		exit(0);
